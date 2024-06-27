@@ -1,18 +1,59 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float maxVelocityChange = 10f;
+
+    private Rigidbody rigidBody;
+    private Joystick joystick;
+    private Vector3 velocityVector = Vector3.zero;
+
+    private void Start()
     {
-        
+        joystick = GetComponentInChildren<Joystick>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        // taking the joystick inputs
+        float xMovementInput = joystick.Horizontal;
+        float zMovementInput = joystick.Vertical;
+
+        // calculate velocity vector
+        Vector3 movementHorizontal = transform.right * xMovementInput;
+        Vector3 movementVertical = transform.forward * zMovementInput;
+
+        // calculate final movement velocity vector
+        Vector3 movementVelocityVector = (movementHorizontal + movementVertical).normalized * speed;
+
+        // apply movement 
+        Move(movementVelocityVector);
+    }
+
+    private void FixedUpdate()
+    {
+        if (velocityVector != Vector3.zero)
+        {
+            // get rigidbody's current velocity
+            Vector3 velocity = rigidBody.velocity;
+            Vector3 velocityChange = velocityVector - velocity;
+
+            // apply force by the amount of velocity change to reach the target velocity
+            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+            velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+            velocityChange.y = 0;
+
+            rigidBody.AddForce(velocityChange, ForceMode.Acceleration);
+        }
+    }
+
+    private void Move(Vector3 movementVelocityVector)
+    {
+        velocityVector = movementVelocityVector;
     }
 }
