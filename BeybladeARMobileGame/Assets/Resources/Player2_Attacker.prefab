@@ -612,6 +612,7 @@ GameObject:
   - component: {fileID: 1802076417471478437}
   - component: {fileID: 1802076417471478443}
   - component: {fileID: 1399659579303404779}
+  - component: {fileID: 2323495684526001332}
   m_Layer: 0
   m_Name: Player2_Attacker
   m_TagString: Player
@@ -718,8 +719,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fb41e4c6611ec4abe703f84746f743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 2
   maxVelocityChange: 4
+  tiltAmount: 7
+--- !u!114 &2323495684526001332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802076417471478439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ceb23da5d4bf6f4489e7a26bcf30342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 3600
+  doSpin: 1
+  playerGraphics: {fileID: 1802076418753269999}
 --- !u!1 &1802076418753269999
 GameObject:
   m_ObjectHideFlags: 0
