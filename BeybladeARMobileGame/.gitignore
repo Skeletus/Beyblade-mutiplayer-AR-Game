@@ -47,6 +47,9 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+#ignore photon folder
+.Photon/
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
