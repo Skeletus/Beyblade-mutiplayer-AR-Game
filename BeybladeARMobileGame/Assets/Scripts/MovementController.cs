@@ -7,6 +7,7 @@ public class MovementController : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float maxVelocityChange = 10f;
+    [SerializeField] private float tiltAmount = 10f;
 
     private Rigidbody rigidBody;
     private Joystick joystick;
@@ -33,6 +34,9 @@ public class MovementController : MonoBehaviour
 
         // apply movement 
         Move(movementVelocityVector);
+
+        transform.rotation = Quaternion.Euler(joystick.Vertical * speed * tiltAmount,
+            0, -joystick.Horizontal * speed * tiltAmount);
     }
 
     private void FixedUpdate()
@@ -50,6 +54,7 @@ public class MovementController : MonoBehaviour
 
             rigidBody.AddForce(velocityChange, ForceMode.Acceleration);
         }
+
     }
 
     private void Move(Vector3 movementVelocityVector)
