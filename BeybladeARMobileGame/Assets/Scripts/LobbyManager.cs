@@ -8,8 +8,46 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [Header("LOGIN UI")]
     [SerializeField] private InputField playerNameInputField;
+    [SerializeField] private GameObject ui_LoginGameObject;
 
-    #region METHODS
+    [Header("Lobby UI")]
+    [SerializeField] private GameObject ui_LobbyGameObject;
+    [SerializeField] private GameObject ui_3DGameObject;
+
+    [Header("Connection Status UI")]
+    [SerializeField] private GameObject ui_ConnectionStatusGameObject;
+
+    #region Unity METHODS
+    private void Start()
+    {
+        ActivateOnlyLoginScreen();
+    }
+
+    private void ActivateOnlyLoginScreen()
+    {
+        ui_LobbyGameObject.SetActive(false);
+        ui_3DGameObject.SetActive(false);
+        ui_ConnectionStatusGameObject.SetActive(false);
+
+        ui_LoginGameObject.SetActive(true);
+    }
+    private void ActivateOnlyConnectionScreen()
+    {
+        ui_LobbyGameObject.SetActive(false);
+        ui_3DGameObject.SetActive(false);
+        ui_LoginGameObject.SetActive(false);
+
+        ui_ConnectionStatusGameObject.SetActive(true);
+    }
+    private void ActivateOnlyLobbyScreen()
+    {
+        ui_LobbyGameObject.SetActive(true);
+        ui_3DGameObject.SetActive(true);
+
+        ui_LoginGameObject.SetActive(false);
+        ui_ConnectionStatusGameObject.SetActive(false);
+    }
+
     #endregion
 
     #region UI Callback Methods
@@ -19,6 +57,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         if(!string.IsNullOrEmpty(playerName))
         {
+            ActivateOnlyConnectionScreen();
+
             if (!PhotonNetwork.IsConnected)
             {
                 PhotonNetwork.LocalPlayer.NickName = playerName;
@@ -31,6 +71,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Debug.Log("Player name is invalid or empty");
         }
     }
+
     #endregion
 
     #region Photon Callbacks Methods
@@ -41,7 +82,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log(PhotonNetwork.LocalPlayer.NickName +  " is connceted to photon server");
+        Debug.Log(PhotonNetwork.LocalPlayer.NickName + " is connceted to photon server");
+        ActivateOnlyLobbyScreen();
     }
+
     #endregion
 }

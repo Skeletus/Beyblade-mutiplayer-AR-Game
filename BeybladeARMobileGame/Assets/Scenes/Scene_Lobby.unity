@@ -2163,6 +2163,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameInputField: {fileID: 897141428}
+  ui_LoginGameObject: {fileID: 1867033495}
+  ui_LobbyGameObject: {fileID: 678248421}
+  ui_3DGameObject: {fileID: 213413509}
+  ui_ConnectionStatusGameObject: {fileID: 644936267}
 --- !u!1 &1563434015
 GameObject:
   m_ObjectHideFlags: 0
