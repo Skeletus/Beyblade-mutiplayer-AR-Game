@@ -388,7 +388,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1550723030}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: OnEnterGameButtonClick
+        m_MethodName: OnEnterGameButtonClicked
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2168,6 +2168,7 @@ MonoBehaviour:
   ui_3DGameObject: {fileID: 213413509}
   ui_ConnectionStatusGameObject: {fileID: 644936267}
   connectionStatusText: {fileID: 1209188605}
+  showConnectionStatus: 0
 --- !u!1 &1563434015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2251,8 +2252,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1550723030}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: OnQuickMatchButtonClicked
         m_Mode: 1
         m_Arguments:

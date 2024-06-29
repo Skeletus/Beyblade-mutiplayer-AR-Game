@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -63,7 +64,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #endregion
 
     #region UI Callback Methods
-    public void OnEnterGameButtonClick()
+    public void OnEnterGameButtonClicked()
     {
         string playerName = playerNameInputField.text;
 
@@ -82,6 +83,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("Player name is invalid or empty");
         }
+    }
+
+    public void OnQuickMatchButtonClicked()
+    {
+        SceneManager.LoadScene("Scene_Loading");
     }
 
     #endregion
