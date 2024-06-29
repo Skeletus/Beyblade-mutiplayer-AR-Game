@@ -16,11 +16,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     [Header("Connection Status UI")]
     [SerializeField] private GameObject ui_ConnectionStatusGameObject;
+    [SerializeField] private Text connectionStatusText;
+    [SerializeField] private bool showConnectionStatus = false;
 
     #region Unity METHODS
     private void Start()
     {
         ActivateOnlyLoginScreen();
+    }
+
+    private void Update()
+    {
+        if(showConnectionStatus)
+        {
+            connectionStatusText.text = "Connection status: " + PhotonNetwork.NetworkClientState;
+
+        }
     }
 
     private void ActivateOnlyLoginScreen()
@@ -37,6 +48,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         ui_3DGameObject.SetActive(false);
         ui_LoginGameObject.SetActive(false);
 
+        showConnectionStatus = true;
         ui_ConnectionStatusGameObject.SetActive(true);
     }
     private void ActivateOnlyLobbyScreen()
