@@ -23,7 +23,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     #region Unity METHODS
     private void Start()
     {
-        ActivateOnlyLoginScreen();
+        if(PhotonNetwork.IsConnected)
+        {
+            ActivateOnlyLobbyScreen();
+        }
+        else
+        {
+            ActivateOnlyLoginScreen();
+        }
     }
 
     private void Update()
