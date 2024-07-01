@@ -102,6 +102,22 @@ public class PlayerSelectionManager : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerSelectionProperties);
     }
 
+    public void OnReSelectButtonClicked()
+    {
+        UI_Selection.SetActive(true);
+        UI_AfterSelection.SetActive(false);
+    }
+
+    public void OnBattleButtonClicked()
+    {
+        SceneLoader.Instance.LoadScene("Scene_Gameplay");
+    }
+
+    public void OnBackButtonClicked()
+    {
+        SceneLoader.Instance.LoadScene("Scene_Lobby");
+    }
+
     #endregion
 
     IEnumerator Rotate(Vector3 axis, Transform transformToRotate,
