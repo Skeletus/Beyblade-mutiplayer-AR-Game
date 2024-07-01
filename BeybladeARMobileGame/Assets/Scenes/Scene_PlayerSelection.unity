@@ -3438,6 +3438,12 @@ MonoBehaviour:
   playerSwitcherTransform: {fileID: 1158278241}
   nextButton: {fileID: 1289593102}
   prevButton: {fileID: 1017666831}
+  playerSelectionNumber: 0
+  beybladeModels:
+  - {fileID: 1327619905}
+  - {fileID: 882062676}
+  - {fileID: 174618834}
+  - {fileID: 955095336}
 --- !u!4 &1836325239
 Transform:
   m_ObjectHideFlags: 0

@@ -9,12 +9,28 @@ public class PlayerSelectionManager : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Button prevButton;
 
+    [SerializeField] private int playerSelectionNumber;
+
+    [SerializeField] private GameObject[] beybladeModels;
+
     #region UNITY METHODS
+    private void Start()
+    {
+        playerSelectionNumber = 0;
+    }
     #endregion
 
     #region UI Callback Methods
     public void NextPlayer()
     {
+        playerSelectionNumber += 1;
+
+        if (playerSelectionNumber >= beybladeModels.Length)
+        {
+            playerSelectionNumber = 0;
+        }
+        Debug.Log(playerSelectionNumber);
+
         nextButton.enabled = false;
         prevButton.enabled = false;
 
@@ -23,6 +39,14 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void PreviousPlayer()
     {
+        playerSelectionNumber -= 1;
+
+        if (playerSelectionNumber < 0)
+        {
+            playerSelectionNumber = beybladeModels.Length - 1;
+        }
+        Debug.Log(playerSelectionNumber);
+
         nextButton.enabled = false;
         prevButton.enabled = false;
 
