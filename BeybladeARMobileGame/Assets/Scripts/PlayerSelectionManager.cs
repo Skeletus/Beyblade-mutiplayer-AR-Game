@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class PlayerSelectionManager : MonoBehaviour
 {
@@ -51,6 +52,13 @@ public class PlayerSelectionManager : MonoBehaviour
         prevButton.enabled = false;
 
         StartCoroutine(Rotate(Vector3.up, playerSwitcherTransform, -90, 1.0f));
+    }
+
+    public void OnSelectButtonClicked()
+    {
+        ExitGames.Client.Photon.Hashtable playerSelectionProperties = 
+            new ExitGames.Client.Photon.Hashtable { {MultiplayerARBeybladeGame.PLAYER_SELECTION_NUMBER, playerSelectionNumber} };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerSelectionProperties);
     }
 
     #endregion
