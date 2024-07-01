@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class PlayerSelectionManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class PlayerSelectionManager : MonoBehaviour
     [SerializeField] private int playerSelectionNumber;
 
     [SerializeField] private GameObject[] beybladeModels;
+
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI playerModelTypeText;
 
     #region UNITY METHODS
     private void Start()
@@ -36,6 +40,17 @@ public class PlayerSelectionManager : MonoBehaviour
         prevButton.enabled = false;
 
         StartCoroutine(Rotate(Vector3.up, playerSwitcherTransform, 90, 1.0f));
+
+        if (playerSelectionNumber == 0 || playerSelectionNumber == 1)
+        {
+            // atack type
+            playerModelTypeText.text = "Attack";
+        }
+        else
+        {
+            // defense type
+            playerModelTypeText.text = "Defense";
+        }
     }
 
     public void PreviousPlayer()
@@ -52,6 +67,17 @@ public class PlayerSelectionManager : MonoBehaviour
         prevButton.enabled = false;
 
         StartCoroutine(Rotate(Vector3.up, playerSwitcherTransform, -90, 1.0f));
+
+        if (playerSelectionNumber == 0 || playerSelectionNumber == 1)
+        {
+            // atack type
+            playerModelTypeText.text = "Attack";
+        }
+        else
+        {
+            // defense type
+            playerModelTypeText.text = "Defense";
+        }
     }
 
     public void OnSelectButtonClicked()

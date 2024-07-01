@@ -3444,6 +3444,7 @@ MonoBehaviour:
   - {fileID: 882062676}
   - {fileID: 174618834}
   - {fileID: 955095336}
+  playerModelTypeText: {fileID: 2010573073}
 --- !u!4 &1836325239
 Transform:
   m_ObjectHideFlags: 0
