@@ -3436,6 +3436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSwitcherTransform: {fileID: 1158278241}
+  nextButton: {fileID: 1289593102}
+  prevButton: {fileID: 1017666831}
 --- !u!4 &1836325239
 Transform:
   m_ObjectHideFlags: 0

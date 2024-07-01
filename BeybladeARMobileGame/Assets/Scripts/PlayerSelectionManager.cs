@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class PlayerSelectionManager : MonoBehaviour
 {
     [SerializeField] private Transform playerSwitcherTransform;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private Button prevButton;
 
     #region UNITY METHODS
     #endregion
@@ -13,11 +15,17 @@ public class PlayerSelectionManager : MonoBehaviour
     #region UI Callback Methods
     public void NextPlayer()
     {
+        nextButton.enabled = false;
+        prevButton.enabled = false;
+
         StartCoroutine(Rotate(Vector3.up, playerSwitcherTransform, 90, 1.0f));
     }
 
     public void PreviousPlayer()
     {
+        nextButton.enabled = false;
+        prevButton.enabled = false;
+
         StartCoroutine(Rotate(Vector3.up, playerSwitcherTransform, -90, 1.0f));
     }
 
@@ -38,5 +46,8 @@ public class PlayerSelectionManager : MonoBehaviour
         }
 
         transformToRotate.rotation = finalRotation;
+
+        nextButton.enabled = true;
+        prevButton.enabled = true;
     }
 }
