@@ -2591,8 +2591,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1836325238}
+        m_TargetAssemblyTypeName: PlayerSelectionManager, Assembly-CSharp
         m_MethodName: OnSelectButtonClicked
         m_Mode: 1
         m_Arguments:
@@ -3436,15 +3436,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSwitcherTransform: {fileID: 1158278241}
-  nextButton: {fileID: 1289593102}
-  prevButton: {fileID: 1017666831}
   playerSelectionNumber: 0
   beybladeModels:
   - {fileID: 1327619905}
   - {fileID: 882062676}
   - {fileID: 174618834}
   - {fileID: 955095336}
+  nextButton: {fileID: 1289593102}
+  prevButton: {fileID: 1017666831}
   playerModelTypeText: {fileID: 2010573073}
+  UI_Selection: {fileID: 1325910398}
+  UI_AfterSelection: {fileID: 347055307}
 --- !u!4 &1836325239
 Transform:
   m_ObjectHideFlags: 0

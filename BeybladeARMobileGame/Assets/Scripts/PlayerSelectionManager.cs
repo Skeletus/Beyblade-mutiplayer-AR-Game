@@ -8,19 +8,25 @@ using TMPro;
 public class PlayerSelectionManager : MonoBehaviour
 {
     [SerializeField] private Transform playerSwitcherTransform;
-    [SerializeField] private Button nextButton;
-    [SerializeField] private Button prevButton;
+    
 
     [SerializeField] private int playerSelectionNumber;
 
     [SerializeField] private GameObject[] beybladeModels;
 
     [Header("UI")]
+    [SerializeField] private Button nextButton;
+    [SerializeField] private Button prevButton;
     [SerializeField] private TextMeshProUGUI playerModelTypeText;
+    [SerializeField] private GameObject UI_Selection;
+    [SerializeField] private GameObject UI_AfterSelection;
 
     #region UNITY METHODS
     private void Start()
     {
+        UI_Selection.SetActive(true);
+        UI_AfterSelection.SetActive(false);
+
         playerSelectionNumber = 0;
     }
 
@@ -88,6 +94,9 @@ public class PlayerSelectionManager : MonoBehaviour
 
     public void OnSelectButtonClicked()
     {
+        UI_Selection.SetActive(false);
+        UI_AfterSelection.SetActive(true);
+
         ExitGames.Client.Photon.Hashtable playerSelectionProperties = 
             new ExitGames.Client.Photon.Hashtable { {MultiplayerARBeybladeGame.PLAYER_SELECTION_NUMBER, playerSelectionNumber} };
         PhotonNetwork.LocalPlayer.SetCustomProperties(playerSelectionProperties);
