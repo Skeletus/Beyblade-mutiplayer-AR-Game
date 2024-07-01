@@ -87,7 +87,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnQuickMatchButtonClicked()
     {
-        SceneManager.LoadScene("Scene_Loading");
+        //SceneManager.LoadScene("Scene_Loading");
+        SceneLoader.Instance.LoadScene("Scene_PlayerSelection");
     }
 
     #endregion
