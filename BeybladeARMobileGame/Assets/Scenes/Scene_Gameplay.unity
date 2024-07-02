@@ -328,6 +328,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0463510369a8424b8edcb7f51f37c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_InformPanelGameObject: {fileID: 212251898}
+  UI_InformText: {fileID: 243443568}
+  searchForGamesButtonGameObject: {fileID: 623289035}
 --- !u!1 &212251898
 GameObject:
   m_ObjectHideFlags: 0

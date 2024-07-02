@@ -10,6 +10,7 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
     [Header("UI")]
     [SerializeField] private GameObject UI_InformPanelGameObject;
     [SerializeField] private TextMeshProUGUI UI_InformText;
+    [SerializeField] private GameObject searchForGamesButtonGameObject;
 
     #region UNITY Methods
 
@@ -41,7 +42,10 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
     public void JoinRandomRoom()
     {
         UI_InformText.text = "Searching for available rooms...";
+
         PhotonNetwork.JoinRandomRoom();
+
+        searchForGamesButtonGameObject.SetActive(false);
     }
 
 
