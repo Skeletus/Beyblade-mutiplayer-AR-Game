@@ -28,6 +28,13 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.CreateRoom(randomRoomName, roomOptions);
     }
+
+    IEnumerator DeactivateAfterSeconds(GameObject gameObject, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        gameObject.SetActive(false);
+    }
+
     #endregion
 
     #region UI Callback Methods
@@ -57,6 +64,11 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
             UI_InformText.text = "Joined to: " + PhotonNetwork.CurrentRoom.Name
                 + " . Waiting for other player";
         }
+        else
+        {
+            UI_InformText.text = "Joined to: " + PhotonNetwork.CurrentRoom.Name;
+            StartCoroutine(DeactivateAfterSeconds(UI_InformPanelGameObject, 2.0f));
+        }
         Debug.Log(PhotonNetwork.NickName + " joined to " + PhotonNetwork.CurrentRoom.Name);
     }
 
@@ -67,6 +79,8 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
 
         UI_InformText.text = newPlayer.NickName + " joined to " + PhotonNetwork.CurrentRoom.Name
             + " player count: " + PhotonNetwork.CurrentRoom.PlayerCount;
+
+        StartCoroutine(DeactivateAfterSeconds(UI_InformPanelGameObject, 2.0f));
     }
 
     #endregion
