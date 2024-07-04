@@ -61,4 +61,14 @@ public class MovementController : MonoBehaviour
     {
         velocityVector = movementVelocityVector;
     }
+
+    public void EnableJoystick()
+    {
+        joystick.gameObject.SetActive(true);
+    }
+
+    public void DisableJoystick()
+    {
+        joystick.gameObject.SetActive(false);
+    }
 }
