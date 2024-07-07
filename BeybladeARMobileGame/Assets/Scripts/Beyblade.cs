@@ -27,4 +27,9 @@ public class Beyblade : MonoBehaviour
     {
         return spinSpeed;
     }
+
+    public void SlowSpinSpeed(float amount)
+    {
+        spinSpeed -= amount;
+    }
 }

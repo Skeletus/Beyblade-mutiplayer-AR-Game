@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class BattleScript : MonoBehaviour
 {
@@ -34,12 +35,21 @@ public class BattleScript : MonoBehaviour
             if(mySpeed > otherPlayerSpeed)
             {
                 Debug.Log(" YOU DAMAGED other player");
+
+                // applying damage to the slower player
+                collision.collider.gameObject.GetComponent<PhotonView>().RPC("DoDaamge", RpcTarget.AllBuffered, 400f);
             }
             else
             {
                 Debug.Log(" GET DAMAGED !!! ");
             }
         }
+    }
+
+    [PunRPC]
+    public void OnDamage(float damageAmount)
+    {
+        
     }
 
 }
