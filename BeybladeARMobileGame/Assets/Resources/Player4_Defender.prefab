@@ -593,6 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinSpeedBarImage: {fileID: 4663518798249398227}
+  spinSpeedRatioText: {fileID: 6403045122420741532}
 --- !u!1 &4663518798063194202
 GameObject:
   m_ObjectHideFlags: 0

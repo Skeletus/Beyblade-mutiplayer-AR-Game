@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class BattleScript : MonoBehaviour
 {
     [SerializeField] private Image spinSpeedBarImage;
+    [SerializeField] private TextMeshProUGUI spinSpeedRatioText;
 
     private Beyblade beybladeScript;
     private float startSpinSpeed;
@@ -30,26 +32,30 @@ public class BattleScript : MonoBehaviour
             float mySpeed = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
             float otherPlayerSpeed = collision.collider.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
 
-            Debug.Log("My speed: " + mySpeed + " --- other player speed: " + otherPlayerSpeed);
+            //Debug.Log("My speed: " + mySpeed + " --- other player speed: " + otherPlayerSpeed);
 
             if(mySpeed > otherPlayerSpeed)
             {
-                Debug.Log(" YOU DAMAGED other player");
+                //Debug.Log(" YOU DAMAGED other player");
 
-                // applying damage to the slower player
-                collision.collider.gameObject.GetComponent<PhotonView>().RPC("DoDaamge", RpcTarget.AllBuffered, 400f);
-            }
-            else
-            {
-                Debug.Log(" GET DAMAGED !!! ");
+                if(collision.collider.gameObject.GetComponent<PhotonView>().IsMine)
+                {
+                    // applying damage to the slower player
+                    collision.collider.gameObject.GetComponent<PhotonView>().RPC("DoDamage", RpcTarget.AllBuffered, 400f);
+                }
+                
             }
         }
     }
 
     [PunRPC]
-    public void OnDamage(float damageAmount)
+    public void DoDamage(float damageAmount)
     {
-        
+        beybladeScript.SlowSpinSpeed(damageAmount);
+        currentSpinSpeed = beybladeScript.GetSpinSpeed();
+
+        spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
+        spinSpeedRatioText.text = currentSpinSpeed +  "/" + startSpinSpeed;
     }
 
 }
