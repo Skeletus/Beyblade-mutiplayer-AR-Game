@@ -21,4 +21,25 @@ public class BattleScript : MonoBehaviour
         spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            // comparing the speed of the beyblades
+            float mySpeed = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+            float otherPlayerSpeed = collision.collider.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
+
+            Debug.Log("My speed: " + mySpeed + " --- other player speed: " + otherPlayerSpeed);
+
+            if(mySpeed > otherPlayerSpeed)
+            {
+                Debug.Log(" YOU DAMAGED other player");
+            }
+            else
+            {
+                Debug.Log(" GET DAMAGED !!! ");
+            }
+        }
+    }
+
 }
