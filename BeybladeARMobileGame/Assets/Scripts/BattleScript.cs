@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Image spinSpeedBarImage;
+
+    private Beyblade beybladeScript;
+    private float startSpinSpeed;
+    private float currentSpinSpeed;
+
+    private void Awake()
     {
-        
+        beybladeScript = GetComponent<Beyblade>();
+
+        startSpinSpeed = beybladeScript.GetSpinSpeed();
+        currentSpinSpeed = beybladeScript.GetSpinSpeed();
+
+        spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

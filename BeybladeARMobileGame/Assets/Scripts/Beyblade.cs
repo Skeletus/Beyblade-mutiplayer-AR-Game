@@ -22,4 +22,9 @@ public class Beyblade : MonoBehaviour
             playerGraphics.transform.Rotate(new Vector3(0, spinSpeed * Time.deltaTime, 0));
         }
     }
+
+    public float GetSpinSpeed()
+    {
+        return spinSpeed;
+    }
 }
