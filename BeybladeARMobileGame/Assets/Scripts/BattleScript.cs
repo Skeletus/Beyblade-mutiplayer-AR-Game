@@ -25,7 +25,7 @@ public class BattleScript : MonoBehaviourPun
 
     private GameObject deathPanelUIGameObject;
     private Beyblade beybladeScript;
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
     private float startSpinSpeed;
     private float currentSpinSpeed;
     private bool isAttacker;
@@ -45,7 +45,7 @@ public class BattleScript : MonoBehaviourPun
     private void Start()
     {
         CheckPlayerType();
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -138,9 +138,9 @@ public class BattleScript : MonoBehaviourPun
 
         GetComponent<MovementController>().enabled = false;
 
-        rigidbody.freezeRotation = true;
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
+        rigidBody.freezeRotation = false;
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = Vector3.zero;
 
         beybladeScript.SetSpinSpeed(0f);
         ui_3D_Gameobject.SetActive(false);
@@ -161,7 +161,7 @@ public class BattleScript : MonoBehaviourPun
         spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
         spinSpeedRatioText.text = currentSpinSpeed + "/" + startSpinSpeed;
 
-        rigidbody.freezeRotation = false;
+        rigidBody.freezeRotation = true;
         transform.rotation = Quaternion.Euler(Vector3.zero);
 
         ui_3D_Gameobject.SetActive(true);
@@ -173,7 +173,7 @@ public class BattleScript : MonoBehaviourPun
     {
         GameObject canvasGameObject = GameObject.Find("Canvas");
 
-        if (canvasGameObject == null)
+        if (deathPanelUIGameObject == null)
         {
             deathPanelUIGameObject = Instantiate(deathPanelUIPrefab, canvasGameObject.transform);
             yield return null;
