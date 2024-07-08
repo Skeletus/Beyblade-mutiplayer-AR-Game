@@ -48,6 +48,18 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
         searchForGamesButtonGameObject.SetActive(false);
     }
 
+    public void OnQuitMatchButtonClicked()
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            SceneLoader.Instance.LoadScene("Scene_Lobby");
+        }
+    }
+
 
     #endregion
 
@@ -87,5 +99,10 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
         StartCoroutine(DeactivateAfterSeconds(UI_InformPanelGameObject, 2.0f));
     }
 
+
+    public override void OnLeftRoom()
+    {
+        SceneLoader.Instance.LoadScene("Scene_Lobby");
+    }
     #endregion
 }
