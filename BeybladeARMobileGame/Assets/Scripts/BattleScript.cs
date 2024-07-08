@@ -11,7 +11,6 @@ public class BattleScript : MonoBehaviourPun
     [SerializeField] private TextMeshProUGUI spinSpeedRatioText;
     [SerializeField] private GameObject ui_3D_Gameobject;
     [SerializeField] private GameObject deathPanelUIPrefab;
-    [SerializeField] private GameObject deathPanelUIGameObject;
 
     [Header("Default damage coefficient")]
     [SerializeField] private float commonDamageCoefficient = 0.05f;
@@ -24,12 +23,14 @@ public class BattleScript : MonoBehaviourPun
     [SerializeField] private float doDamageCoefficientDefender = 0.75f;
     [SerializeField] private float getDamageCoefficientDefender = 1.2f;
 
+    private GameObject deathPanelUIGameObject;
     private Beyblade beybladeScript;
     private Rigidbody rigidbody;
     private float startSpinSpeed;
     private float currentSpinSpeed;
     private bool isAttacker;
     private bool isDefender;
+    private bool isDead = false;
 
     private void Awake()
     {
@@ -104,31 +105,37 @@ public class BattleScript : MonoBehaviourPun
     [PunRPC]
     public void DoDamage(float damageAmount)
     {
-        if(isAttacker)
+        if(!isDead)
         {
-            damageAmount *= getDamageCoefficientAttacker;
-        }
-        else if (isDefender)
-        {
-            damageAmount *= getDamageCoefficientDefender;
-        }
+            if (isAttacker)
+            {
+                damageAmount *= getDamageCoefficientAttacker;
+            }
+            else if (isDefender)
+            {
+                damageAmount *= getDamageCoefficientDefender;
+            }
 
-        beybladeScript.SlowSpinSpeed(damageAmount);
-        currentSpinSpeed = beybladeScript.GetSpinSpeed();
+            beybladeScript.SlowSpinSpeed(damageAmount);
+            currentSpinSpeed = beybladeScript.GetSpinSpeed();
 
-        spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
-        spinSpeedRatioText.text = currentSpinSpeed.ToString("F0") +  "/" + startSpinSpeed;
+            spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
+            spinSpeedRatioText.text = currentSpinSpeed.ToString("F0") + "/" + startSpinSpeed;
 
-        if (currentSpinSpeed < 100)
-        {
-            // die
-            Die();
+            if (currentSpinSpeed < 100)
+            {
+                // die
+                Die();
+            }
         }
+        
     }
 
     [PunRPC]
     public void Die()
     {
+        isDead = true;
+
         GetComponent<MovementController>().enabled = false;
 
         rigidbody.freezeRotation = true;
@@ -143,6 +150,23 @@ public class BattleScript : MonoBehaviourPun
             // count down for respawn
             StartCoroutine(Respawn());
         }
+    }
+
+    [PunRPC]
+    public void Reborn()
+    {
+        beybladeScript.SetSpinSpeed(startSpinSpeed);
+        currentSpinSpeed = beybladeScript.GetSpinSpeed();
+
+        spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
+        spinSpeedRatioText.text = currentSpinSpeed + "/" + startSpinSpeed;
+
+        rigidbody.freezeRotation = false;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+
+        ui_3D_Gameobject.SetActive(true);
+
+        isDead = false;
     }
 
     IEnumerator Respawn()
@@ -172,6 +196,10 @@ public class BattleScript : MonoBehaviourPun
 
             GetComponent<MovementController>().enabled = false;
         }
-        
+
+        deathPanelUIGameObject.SetActive(false);
+        GetComponent<MovementController>().enabled = true;
+
+        photonView.RPC("Reborn", RpcTarget.AllBuffered);
     }
 }
