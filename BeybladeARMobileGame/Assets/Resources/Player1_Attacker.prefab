@@ -370,6 +370,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinSpeedBarImage: {fileID: 2523371896873197419}
   spinSpeedRatioText: {fileID: 4278660854099477796}
+  commonDamageCoefficient: 0.05
+  doDamageCoefficientAttacker: 10
+  getDamageCoefficientAttacker: 1.2
+  doDamageCoefficientDefender: 10
+  getDamageCoefficientDefender: 1.2
 --- !u!1 &2523371896480695252
 GameObject:
   m_ObjectHideFlags: 0

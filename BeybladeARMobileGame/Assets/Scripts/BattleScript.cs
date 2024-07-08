@@ -5,10 +5,13 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
-public class BattleScript : MonoBehaviour
+public class BattleScript : MonoBehaviourPun
 {
     [SerializeField] private Image spinSpeedBarImage;
     [SerializeField] private TextMeshProUGUI spinSpeedRatioText;
+    [SerializeField] private GameObject ui_3D_Gameobject;
+    [SerializeField] private GameObject deathPanelUIPrefab;
+    [SerializeField] private GameObject deathPanelUIGameObject;
 
     [Header("Default damage coefficient")]
     [SerializeField] private float commonDamageCoefficient = 0.05f;
@@ -22,6 +25,7 @@ public class BattleScript : MonoBehaviour
     [SerializeField] private float getDamageCoefficientDefender = 1.2f;
 
     private Beyblade beybladeScript;
+    private Rigidbody rigidbody;
     private float startSpinSpeed;
     private float currentSpinSpeed;
     private bool isAttacker;
@@ -40,6 +44,7 @@ public class BattleScript : MonoBehaviour
     private void Start()
     {
         CheckPlayerType();
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -113,6 +118,60 @@ public class BattleScript : MonoBehaviour
 
         spinSpeedBarImage.fillAmount = currentSpinSpeed / startSpinSpeed;
         spinSpeedRatioText.text = currentSpinSpeed.ToString("F0") +  "/" + startSpinSpeed;
+
+        if (currentSpinSpeed < 100)
+        {
+            // die
+            Die();
+        }
     }
 
+    [PunRPC]
+    public void Die()
+    {
+        GetComponent<MovementController>().enabled = false;
+
+        rigidbody.freezeRotation = true;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+
+        beybladeScript.SetSpinSpeed(0f);
+        ui_3D_Gameobject.SetActive(false);
+
+        if (photonView.IsMine)
+        {
+            // count down for respawn
+            StartCoroutine(Respawn());
+        }
+    }
+
+    IEnumerator Respawn()
+    {
+        GameObject canvasGameObject = GameObject.Find("Canvas");
+
+        if (canvasGameObject == null)
+        {
+            deathPanelUIGameObject = Instantiate(deathPanelUIPrefab, canvasGameObject.transform);
+            yield return null;
+        }
+        else
+        {
+            deathPanelUIGameObject.SetActive(true);
+        }
+
+        Text respawnTimeText = deathPanelUIGameObject.transform.Find("RespawnTimeText").GetComponent<Text>();
+
+        float respawnTime = 8.0f;
+        respawnTimeText.text = respawnTime.ToString(".00");
+
+        while(respawnTime > 0.0f)
+        {
+            yield return new WaitForSeconds(1.0f);
+            respawnTime -= 1.0f;
+            respawnTimeText.text = respawnTime.ToString(".00");
+
+            GetComponent<MovementController>().enabled = false;
+        }
+        
+    }
 }
