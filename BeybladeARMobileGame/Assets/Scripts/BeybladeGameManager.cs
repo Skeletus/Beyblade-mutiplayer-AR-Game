@@ -11,6 +11,8 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject UI_InformPanelGameObject;
     [SerializeField] private TextMeshProUGUI UI_InformText;
     [SerializeField] private GameObject searchForGamesButtonGameObject;
+    [SerializeField] private GameObject adjustButton;
+    [SerializeField] private GameObject raycastCenterImage;
 
     #region UNITY Methods
 
@@ -75,6 +77,9 @@ public class BeybladeGameManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        adjustButton.SetActive(false);
+        raycastCenterImage.SetActive(false);
+
         if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
             UI_InformText.text = "Joined to: " + PhotonNetwork.CurrentRoom.Name

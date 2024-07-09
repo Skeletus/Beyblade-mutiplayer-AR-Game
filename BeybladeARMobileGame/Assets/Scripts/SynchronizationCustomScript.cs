@@ -20,6 +20,8 @@ public class SynchronizationCustomScript : MonoBehaviour, IPunObservable
     private float distance;
     private float angle;
 
+    private GameObject battleArenaGameObject;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -27,6 +29,8 @@ public class SynchronizationCustomScript : MonoBehaviour, IPunObservable
 
         networkedPosition = new Vector3();
         networkedRotation = new Quaternion();
+
+        battleArenaGameObject = GameObject.Find("BattleArena");
     }
 
     private void FixedUpdate()
@@ -48,7 +52,7 @@ public class SynchronizationCustomScript : MonoBehaviour, IPunObservable
         {
             // then photonview is mine and i'm the one who controls this player
             // should send position, velocity and data to the otther players
-            stream.SendNext(rigidBody.position);
+            stream.SendNext(rigidBody.position - battleArenaGameObject.transform.position);
             stream.SendNext(rigidBody.rotation);
 
             if (synchronizeVelocity)
@@ -63,7 +67,7 @@ public class SynchronizationCustomScript : MonoBehaviour, IPunObservable
         else
         {
             // called on my player gameobject that exits in remote player's game
-            networkedPosition = (Vector3)stream.ReceiveNext();
+            networkedPosition = (Vector3)stream.ReceiveNext() + battleArenaGameObject.transform.position;
             networkedRotation = (Quaternion)stream.ReceiveNext();
 
             if(isTeleportEnabled)

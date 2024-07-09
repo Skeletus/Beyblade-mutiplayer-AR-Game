@@ -367,6 +367,8 @@ MonoBehaviour:
   UI_InformPanelGameObject: {fileID: 212251898}
   UI_InformText: {fileID: 243443568}
   searchForGamesButtonGameObject: {fileID: 623289035}
+  adjustButton: {fileID: 905712417}
+  raycastCenterImage: {fileID: 2099446619}
 --- !u!1 &212251898
 GameObject:
   m_ObjectHideFlags: 0
