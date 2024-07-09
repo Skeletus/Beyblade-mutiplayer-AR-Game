@@ -1858,7 +1858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &905712418
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1924,8 +1924,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1415549196}
+        m_TargetAssemblyTypeName: ARPlacementAndPlaneDetectionController, Assembly-CSharp
         m_MethodName: EnableARPlacementAndPlaneDetection
         m_Mode: 1
         m_Arguments:
@@ -2372,6 +2372,7 @@ GameObject:
   - component: {fileID: 1415549193}
   - component: {fileID: 1415549194}
   - component: {fileID: 1415549195}
+  - component: {fileID: 1415549196}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -2453,6 +2454,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RaycastPrefab: {fileID: 0}
+--- !u!114 &1415549196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415549190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155e7bead4cce6243b98929ef14b2a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeButton: {fileID: 1543558401}
+  adjustButton: {fileID: 905712417}
+  searchForGameButton: {fileID: 623289035}
+  informUIPanelText: {fileID: 243443568}
 --- !u!1 &1543558401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2471,7 +2488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1543558402
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2537,9 +2554,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: DisableARPlacementAndPlaneDetection
+      - m_Target: {fileID: 1415549196}
+        m_TargetAssemblyTypeName: ARPlacementAndPlaneDetectionController, Assembly-CSharp
+        m_MethodName: DisableARPlacementAndDetection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
