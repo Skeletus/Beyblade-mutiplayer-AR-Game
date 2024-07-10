@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
+using System;
 
 public class BattleScript : MonoBehaviourPun
 {
@@ -22,6 +23,11 @@ public class BattleScript : MonoBehaviourPun
     [Header("Defender")]
     [SerializeField] private float doDamageCoefficientDefender = 0.75f;
     [SerializeField] private float getDamageCoefficientDefender = 1.2f;
+    
+    [Header("SFX and VFX")]
+    [SerializeField] private List<GameObject> pooledObjects;
+    [SerializeField] private int amountToPool = 8;
+    [SerializeField] private GameObject collisionEffectPrefab;
 
     private GameObject deathPanelUIGameObject;
     private Beyblade beybladeScript;
@@ -46,12 +52,44 @@ public class BattleScript : MonoBehaviourPun
     {
         CheckPlayerType();
         rigidBody = GetComponent<Rigidbody>();
+
+        if (photonView.IsMine)
+        {
+            pooledObjects= new List<GameObject>();
+            for(int i = 0; i < amountToPool; i++)
+            {
+                GameObject obj = (GameObject)Instantiate(collisionEffectPrefab,
+                    Vector3.zero, Quaternion.identity);
+
+                obj.SetActive(true);
+                pooledObjects.Add(obj);
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+            if (photonView.IsMine)
+            {
+                Vector3 effectPosition = (gameObject.transform.position + collision.transform.position) / 2 +
+                    new Vector3(0, 0.5f, 0);
+
+                // instantiate collision effect particle system
+                GameObject collisionEffectGameObject = GetPooledObject();
+                if(collisionEffectGameObject != null)
+                {
+                    collisionEffectGameObject.transform.position = effectPosition;
+                    collisionEffectGameObject.SetActive(true);
+                    collisionEffectGameObject.GetComponentInChildren<ParticleSystem>().Play();
+
+                    // deactivate collision effect particle system after x seconds
+                    StartCoroutine(DeactivateAfterSeconds(collisionEffectGameObject, 0.5f));
+                }
+            }
+
+            
             // comparing the speed of the beyblades
             float mySpeed = gameObject.GetComponent<Rigidbody>().velocity.magnitude;
             float otherPlayerSpeed = collision.collider.gameObject.GetComponent<Rigidbody>().velocity.magnitude;
@@ -79,7 +117,27 @@ public class BattleScript : MonoBehaviourPun
                 }
                 
             }
+            
         }
+    }
+
+    private IEnumerator DeactivateAfterSeconds(GameObject collisionEffectGameObject, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        collisionEffectGameObject.SetActive(true);
+    }
+
+    private GameObject GetPooledObject()
+    {
+        for(int i= 0; i < pooledObjects.Count; i++)
+        {
+            if (!pooledObjects[i].activeInHierarchy)
+            {
+                return pooledObjects[i];
+            }
+        }
+
+        return null;
     }
 
     private void CheckPlayerType()
